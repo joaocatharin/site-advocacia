@@ -266,7 +266,7 @@
 
                 <div class="contato-form">
                     <h3>Envie uma Mensagem</h3>
-                    <form id="contactForm" action="https://formsubmit.co/chiquesitamires@gmail.com" method="POST">
+                    <form id="contactForm" action="https://formspree.io/f/xojnqgqd" method="POST">
                         <div class="form-group">
                             <label for="fullname">Nome Completo *</label>
                             <input type="text" id="fullname" name="fullname" placeholder="Seu Nome Completo" required>
@@ -297,12 +297,9 @@
                             <textarea id="message" name="message" placeholder="Descreva seu caso ou dúvida" rows="5" required></textarea>
                         </div>
 
-                        <!-- Campo oculto para redirecionar após envio -->
-                        <input type="hidden" name="_next" value="https://yourdomain.com/success.html">
-                        <!-- Campo oculto para CAPTCHA -->
-                        <input type="hidden" name="_captcha" value="false">
-                        <!-- Campo oculto com o assunto do email -->
+                        <!-- Campos ocultos do Formspree -->
                         <input type="hidden" name="_subject" value="Novo Contato - Tamires Chiquesi Advocacia">
+                        <input type="hidden" name="_autoresponse" value="Obrigado por sua mensagem! Tamires entrará em contato em breve.">
                         
                         <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
                         <p class="form-info">* Campos obrigatórios</p>

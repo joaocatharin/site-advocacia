@@ -42,8 +42,6 @@ const successMessage = document.getElementById('successMessage');
 
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
         const fullname = document.getElementById('fullname').value.trim();
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
@@ -52,6 +50,7 @@ if (contactForm) {
         
         // Validação básica
         if (!fullname || !email || !phone || !service || !message) {
+            e.preventDefault();
             showErrorMessage('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
@@ -59,6 +58,7 @@ if (contactForm) {
         // Validação de email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
+            e.preventDefault();
             showErrorMessage('Por favor, insira um email válido.');
             return;
         }
@@ -66,6 +66,7 @@ if (contactForm) {
         // Validação de telefone (apenas números, hífens e parênteses)
         const phoneRegex = /^\(\d{2}\)\s?\d{4,5}-\d{4}$/;
         if (!phoneRegex.test(phone)) {
+            e.preventDefault();
             showErrorMessage('Por favor, insira um telefone válido no formato (XX) 98765-4321 ou (XX) 8765-4321.');
             return;
         }
@@ -91,22 +92,8 @@ if (contactForm) {
         console.log('Contato salvo:', contactData);
         console.log('Total de contatos:', allContacts.length);
         
-        // Mostrar mensagem de sucesso
-        contactForm.style.display = 'none';
-        successMessage.style.display = 'block';
-        
-        // Resetar formulário após 2 segundos
-        setTimeout(() => {
-            contactForm.reset();
-            contactForm.style.display = 'block';
-            successMessage.style.display = 'none';
-        }, 3000);
-        
-        // Deixar o FormSubmit enviar o email (submit padrão)
-        // O formulário será enviado após essas validações
-        setTimeout(() => {
-            contactForm.submit();
-        }, 500);
+        // Formspree envia automaticamente o formulário
+        // A página será redirecionada para o padrão do Formspree
     });
 }
 
