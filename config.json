@@ -1,0 +1,100 @@
+{
+  "site": {
+    "title": "Tamires Chiquesi Advocacia",
+    "description": "Especialista em Direito Previdenciário e Trabalhista",
+    "tagline": "Em busca do seu melhor benefício",
+    "year_founded": 2013,
+    "version": "1.0.0",
+    "last_updated": "2025-02-07"
+  },
+  "contact": {
+    "email": "chiquesitamires@gmail.com",
+    "phone": "(19) 98448-0805",
+    "phone_raw": "+5519984480805",
+    "address": {
+      "street": "Avenida Independência, 1840",
+      "complement": "11º andar, sala 11 - Alto",
+      "city": "Piracicaba",
+      "state": "SP",
+      "zipcode": "13419-155",
+      "country": "Brasil"
+    }
+  },
+  "social": {
+    "instagram": "https://instagram.com/tamirescatharin",
+    "facebook": "",
+    "linkedin": "",
+    "whatsapp": "https://wa.me/5519984480805"
+  },
+  "services": [
+    {
+      "id": 1,
+      "name": "Orientação para Audiência",
+      "icon": "fa-gavel",
+      "description": "Orientação especializada para audiências judiciais com sucesso comprovado",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Processo de Cadastramento de Deficientes",
+      "icon": "fa-shield-alt",
+      "description": "Assistência completa no cadastramento de deficientes nos serviços de Segurança Social",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Consultas Jurídicas",
+      "icon": "fa-briefcase",
+      "description": "Consultoria especializada em direito previdenciário e trabalhista",
+      "active": true
+    }
+  ],
+  "practice_areas": {
+    "main": "Direito Previdenciário e Trabalhista",
+    "specializations": [
+      "Aposentadorias",
+      "Auxílios",
+      "Pensão por Morte",
+      "BCP - LOAM",
+      "Revisões"
+    ]
+  },
+  "design": {
+    "colors": {
+      "primary": "#1a3a52",
+      "secondary": "#d4a574",
+      "accent": "#e8d4c4",
+      "text_dark": "#333333",
+      "text_light": "#666666",
+      "bg_light": "#f9f7f4",
+      "bg_white": "#ffffff",
+      "border": "#e0e0e0"
+    },
+    "fonts": {
+      "primary": "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
+      "monospace": "Courier New, monospace"
+    }
+  },
+  "performance": {
+    "image_optimization": true,
+    "lazy_loading": true,
+    "cache_enabled": true,
+    "compression": true
+  },
+  "seo": {
+    "keywords": "advocacia, direito previdenciário, consulta jurídica, Piracicaba, direito trabalhista",
+    "og_image": "images/hero-image.jpg",
+    "og_title": "Tamires Chiquesi Advocacia",
+    "og_description": "Especialista em Direito Previdenciário e Trabalhista em Piracicaba - SP"
+  },
+  "development": {
+    "last_modified_by": "GitHub Copilot",
+    "build_date": "2025-02-07",
+    "dependencies": [
+      "Font Awesome 6.4.0",
+      "CSS Grid",
+      "Flexbox",
+      "Vanilla JavaScript"
+    ]
+  }
+}

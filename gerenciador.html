@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Contatos - Tamires Chiquesi Advocacia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a3a52 0%, #2a5a82 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a3a52 0%, #2a5a82 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #1a3a52;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a5a82;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 58, 82, 0.3);
+        }
+
+        .btn-success {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #da190b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #d4a574;
+            color: #1a3a52;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0b896;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f9f7f4 0%, #e8d4c4 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 5px solid #d4a574;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a3a52;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .messages {
+            background: #f9f7f4;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            max-height: 30vh;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: none;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message.success {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .message.error {
+            background-color: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .contacts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .contacts-table thead {
+            background-color: #1a3a52;
+            color: white;
+        }
+
+        .contacts-table th,
+        .contacts-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .contacts-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .contacts-table tbody tr:nth-child(even) {
+            background-color: #f9f7f4;
+        }
+
+        .service-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .service-trabalhista {
+            background-color: #bbdefb;
+            color: #0d47a1;
+        }
+
+        .service-aposentadoria {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .service-outro {
+            background-color: #ffe0b2;
+            color: #e65100;
+        }
+
+        .timestamp {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #999;
+        }
+
+        .no-data p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .contacts-table {
+                font-size: 0.9rem;
+            }
+
+            .contacts-table th,
+            .contacts-table td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Gerenciador de Contatos</h1>
+            <p>Tamires Chiquesi Advocacia</p>
+        </div>
+
+        <div class="content">
+            <!-- Mensagens -->
+            <div id="messages" class="messages"></div>
+
+            <!-- Estatísticas -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalContacts">0</div>
+                    <div class="stat-label">Total de Contatos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTrabalho">0</div>
+                    <div class="stat-label">Serviços Trabalhistas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAposentadoria">0</div>
+                    <div class="stat-label">Aposentadorias</div>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button class="btn btn-primary" onclick="recarregarDados()">🔄 Recarregar</button>
+                <button class="btn btn-success" onclick="exportarDados()">📥 Exportar CSV</button>
+                <button class="btn btn-secondary" onclick="copiarTodosDados()">📋 Copiar Tudo</button>
+                <button class="btn btn-danger" onclick="limparTodosDados()">🗑️ Limpar Tudo</button>
+            </div>
+
+            <!-- Busca -->
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Buscar por nome, email ou telefone..." 
+                    onkeyup="filtrarContatos()"
+                >
+            </div>
+
+            <!-- Tabela de Contatos -->
+            <table class="contacts-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Serviço</th>
+                        <th>Data</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="contactsList">
+                    <tr>
+                        <td colspan="7" class="no-data">
+                            <p>📭 Nenhum contato salvo ainda</p>
+                            <p style="font-size: 0.9rem;">Os contatos aparecerão aqui assim que forem recebidos.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Recarregar dados ao abrir a página
+        document.addEventListener('DOMContentLoaded', recarregarDados);
+
+        function recarregarDados() {
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            exibirContatos(contacts);
+            atualizarEstatisticas(contacts);
+        }
+
+        function exibirContatos(contacts) {
+            const tbody = document.getElementById('contactsList');
+            
+            if (contacts.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="no-data">
+                            <p>📭 Nenhum contato salvo ainda</p>
+                            <p style="font-size: 0.9rem;">Os contatos aparecerão aqui assim que forem recebidos.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = contacts.map((contact, index) => {
+                const serviceBadgeClass = contact.service.includes('Trabalhista') 
+                    ? 'service-trabalhista' 
+                    : contact.service.includes('Aposentadoria')
+                    ? 'service-aposentadoria'
+                    : 'service-outro';
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${escapeHtml(contact.fullname)}</strong></td>
+                        <td><a href="mailto:${contact.email}">${contact.email}</a></td>
+                        <td><a href="tel:${contact.phone}">${contact.phone}</a></td>
+                        <td><span class="service-badge ${serviceBadgeClass}">${contact.service}</span></td>
+                        <td><span class="timestamp">${contact.timestamp}</span></td>
+                        <td>
+                            <button onclick="verDetalhes(${index})" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Ver</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function atualizarEstatisticas(contacts) {
+            document.getElementById('totalContacts').textContent = contacts.length;
+            
+            const trabalho = contacts.filter(c => c.service.includes('Trabalhista')).length;
+            const aposentadoria = contacts.filter(c => c.service.includes('Aposentadoria')).length;
+            
+            document.getElementById('totalTrabalho').textContent = trabalho;
+            document.getElementById('totalAposentadoria').textContent = aposentadoria;
+        }
+
+        function verDetalhes(index) {
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            const contact = contacts[index];
+
+            if (!contact) return;
+
+            const mensagem = `
+=== DETALHES DO CONTATO #${index + 1} ===
+
+Nome Completo: ${contact.fullname}
+Email: ${contact.email}
+Telefone: ${contact.phone}
+Tipo de Serviço: ${contact.service}
+Data: ${contact.timestamp}
+
+MENSAGEM:
+${contact.message}
+
+========================
+            `;
+
+            alert(mensagem);
+        }
+
+        function filtrarContatos() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            
+            const filtered = contacts.filter(contact => 
+                contact.fullname.toLowerCase().includes(searchTerm) ||
+                contact.email.toLowerCase().includes(searchTerm) ||
+                contact.phone.includes(searchTerm)
+            );
+
+            exibirContatos(filtered);
+        }
+
+        function exportarDados() {
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            
+            if (contacts.length === 0) {
+                showMessage('Nenhum contato para exportar', 'error');
+                return;
+            }
+
+            let csv = 'Nome,Email,Telefone,Serviço,Data,Mensagem\n';
+            
+            contacts.forEach(contact => {
+                const message = contact.message.replace(/"/g, '""').replace(/\n/g, ' ');
+                csv += `"${contact.fullname}","${contact.email}","${contact.phone}","${contact.service}","${contact.timestamp}","${message}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', `contatos_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showMessage(`✅ ${contacts.length} contato(s) exportado(s)!`, 'success');
+        }
+
+        function copiarTodosDados() {
+            const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+            
+            if (contacts.length === 0) {
+                showMessage('Nenhum contato para copiar', 'error');
+                return;
+            }
+
+            let texto = 'CONTATOS SALVOS - Tamires Chiquesi Advocacia\n\n';
+            
+            contacts.forEach((contact, index) => {
+                texto += `Contato #${index + 1}\n`;
+                texto += `Nome: ${contact.fullname}\n`;
+                texto += `Email: ${contact.email}\n`;
+                texto += `Telefone: ${contact.phone}\n`;
+                texto += `Serviço: ${contact.service}\n`;
+                texto += `Data: ${contact.timestamp}\n`;
+                texto += `Mensagem: ${contact.message}\n\n`;
+            });
+
+            navigator.clipboard.writeText(texto).then(() => {
+                showMessage('✅ Todos os dados copiados!', 'success');
+            });
+        }
+
+        function limparTodosDados() {
+            if (!confirm('⚠️ Tem certeza que deseja limpar TODOS os contatos salvos? Esta ação não pode ser desfeita!')) {
+                return;
+            }
+
+            if (!confirm('🚨 Esta é a segunda confirmação. Realmente deseja limpar tudo?')) {
+                return;
+            }
+
+            localStorage.removeItem('contacts');
+            showMessage('✅ Todos os contatos foram removidos!', 'success');
+            recarregarDados();
+        }
+
+        function showMessage(text, type) {
+            const messagesDiv = document.getElementById('messages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.textContent = text;
+            
+            messagesDiv.innerHTML = '';
+            messagesDiv.appendChild(messageEl);
+
+            setTimeout(() => {
+                messageEl.remove();
+            }, 4000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Recarregar dados a cada 5 segundos (opcional)
+        // setInterval(recarregarDados, 5000);
+    </script>
+</body>
+</html>

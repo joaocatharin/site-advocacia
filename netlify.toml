@@ -1,0 +1,8 @@
+# Netlify build configuration: use Netlify's built-in Hugo
+[build]
+  command = "hugo"
+  publish = "public"
+
+[build.environment]
+  # Escolha a versão do Hugo que deseja usar durante o build
+  HUGO_VERSION = "0.125.2"
